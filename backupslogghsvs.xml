@@ -15,7 +15,8 @@
  <changelogurl>https://raw.githubusercontent.com/GHSVS-de/plg_system_backupslogghsvs/master/changelog-infos.xml</changelogurl>
  
  <files>
-  <filename plugin="backupslogghsvs">backupslogghsvs.php</filename>
+	<filename plugin="backupslogghsvs">backupslogghsvs.php</filename>
+	<filename>LICENCE.txt</filename>
  </files>
 
  <config />
