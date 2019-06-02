@@ -1,6 +1,8 @@
 <?php
 defined('JPATH_BASE') or die;
 
+use Joomla\CMS\Plugin\CMSPlugin;
+
 class PlgSystemBackupslogghsvs extends CMSPlugin
 {
   protected $app;
