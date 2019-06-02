@@ -16,7 +16,7 @@
  
  <files>
 	<filename plugin="backupslogghsvs">backupslogghsvs.php</filename>
-	<filename>LICENCE.txt</filename>
+	<filename>LICENSE.txt</filename>
  </files>
 
  <config />
