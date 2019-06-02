@@ -1,6 +1,7 @@
 <?php
 defined('JPATH_BASE') or die;
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\CMSPlugin;
 
 class PlgSystemBackupslogghsvs extends CMSPlugin
@@ -8,10 +9,11 @@ class PlgSystemBackupslogghsvs extends CMSPlugin
   protected $app;
 	protected $db;
 	private $execute = null;
-	protected $backuppaths = [];
-	protected $backuptables = [];
-
-	public function onAfterDispatch()
+	protected $backuppaths = array();
+	protected $backuptables = array();
+	protected $log_file_name = 'plg_system_backupslogghsvs';
+	
+	public function onUserAfterLogin($options)
 	{
 		if (
 			!$this->app->isClient('administrator')
@@ -21,12 +23,8 @@ class PlgSystemBackupslogghsvs extends CMSPlugin
 			return;
 		}
 
-	}
-	
-	public function onUserAfterLogin($options)
-	{
 		$this->prepareExecutes();
-		
+	
 		if ($this->execute !== true)
 		{
 			return;
@@ -42,8 +40,7 @@ class PlgSystemBackupslogghsvs extends CMSPlugin
 		
 			try
 			{
-				$lines = $this->db->loadAssocList();
-				echo ' 4654sd48sa7d98sD81s8d71dsa ' . print_r($lines, true);exit;
+				$result = $this->db->loadAssocList();
 			}
 			catch (Exception $e)
 			{
@@ -51,22 +48,51 @@ class PlgSystemBackupslogghsvs extends CMSPlugin
 				$this->execute = false;
 				return;
 			}
-			
+
+			if ($result)
+			{
+				$lines = array();
+				$do = 0;
+				
+				// .txt for opening in EXCEL with chance to make settings for tab separated.
+				$logFile = $this->backuppaths[$component] . '/' . $this->log_file_name . '_' . $component . '.csv.txt';
+
+				if (is_file($logFile))
+				{
+					$lines = file($logFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+					// $lines = array_flip($lines);
+				}
+
+				array_unshift($result, array_keys($result[0]));
+
+				foreach ($result as $data)
+				{
+					$data = implode("\t", $data);
+					$data = $this->removeJPATH_SITE(strip_tags($data));
+
+					if (!in_array($data, $lines))
+					{
+						$lines[] = $data;
+						$do++;
+					}
+				}
+				
+				if ($do)
+				{
+					file_put_contents($logFile, implode("\n", $lines), FILE_APPEND);
+					$this->app->enqueueMessage('Just info: plg_system_backupslogghsvs added ' . $do . ' backup log entries. Extension: ' . $component);
+				}
+			}
 		}
 	}
-	
+
 	public function prepareExecutes()
 	{
-		if ($this->execute !== true)
-		{
-			return;
-		}
-		
 		$this->backuppaths = array(
 			'akeeba' => JPATH_ADMINISTRATOR . '/components/com_akeeba/backup',
-			'ejb'    => JPATH_ADMINISTRATOR . '/components/com_easyjoomlabackup/backups'
+			'ejb'    => JPATH_ADMINISTRATOR . '/components/com_easyjoomlabackup/backups',
 		);
-		
+
 		foreach ($this->backuppaths as $component => $path)
 		{
 			if (!is_dir($path) || !is_writable($path))
@@ -74,7 +100,7 @@ class PlgSystemBackupslogghsvs extends CMSPlugin
 				unset($this->backuppaths[$component]);
 			}
 		}
-		
+
 		if (!$this->backuppaths)
 		{
 			$this->execute = false;
@@ -87,7 +113,7 @@ class PlgSystemBackupslogghsvs extends CMSPlugin
 		);
 
 		$prefix = $this->db->getPrefix();
-		
+
 		try
 		{
 			$tables = $this->db->getTableList();
@@ -102,7 +128,7 @@ class PlgSystemBackupslogghsvs extends CMSPlugin
 		foreach ($this->backuptables as $component => $table)
 		{
 			if (
-				!in_array($component, $this->backuppaths)
+				!isset($this->backuppaths[$component])
 				|| !in_array($prefix . $table, $tables) 
 			){
 				unset($this->backuptables[$component]);
@@ -119,5 +145,10 @@ class PlgSystemBackupslogghsvs extends CMSPlugin
 		}
 
 		$this->execute = true;
+	}
+
+	protected static function removeJPATH_SITE($str)
+	{
+		return str_replace(array(JPATH_SITE, "\n"), array('', ' '), $str);
 	}
 }
