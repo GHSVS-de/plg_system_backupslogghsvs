@@ -8,4 +8,7 @@ When a user logs in into backend:
 - Show a message only if new lines were added to log files.
 - Nothing more.
 
+The plugin uses hard coded paths to the backup directories! It doesn't detect changed locations in settings of extensions!
+https://github.com/GHSVS-de/plg_system_backupslogghsvs/blob/master/backupslogghsvs.php#L91-L94
+
 Last tests: Joomla 3.9.7-dev, PHP 7.3.3, MySql 5.7.25
