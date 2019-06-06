@@ -7,7 +7,7 @@
  <license>GNU General Public License version 3 or later; see LICENSE file</license>
  <authorEmail></authorEmail>
  <authorUrl>https://www.ghsvs.de</authorUrl>
- <version>2019.06.01</version>
+ <version>2019.06.06</version>
  <description>Joomla plugin that copies db entries of Akeeba Backup and Easy Joomla Backup into a tab separated csv file inside each backups folder</description>
 
  <updateservers><server type="extension" priority="1" name="PLG_SYSTEM_BACKUPSLOGGHSVS">https://raw.githubusercontent.com/GHSVS-de/plg_system_backupslogghsvs/master/updateserver-infos.xml</server></updateservers>
