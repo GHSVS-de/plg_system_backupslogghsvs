@@ -3,7 +3,7 @@ Joomla plugin that copies backups informations of extensions "Akeeba Backup" and
 
 When a user logs in into backend:
 - Read (if exists) database tables "#__ak_stats" (Akeeba Backup) and "#__easyjoomlabackup".
-- Append only new entries to files "plg_system_backupslogghsvs_akeeba.csv.txt" and "plg_system_backupslogghsvs_ejb.csv.txt"
+- Append only new OR CHANGED entries to files "plg_system_backupslogghsvs_akeeba.csv.txt" and "plg_system_backupslogghsvs_ejb.csv.txt"
 - Files are located in the backups directories.
 - Show a message only if new lines were added to log files.
 - Nothing more.
