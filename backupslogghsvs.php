@@ -52,7 +52,7 @@ class PlgSystemBackupslogghsvs extends CMSPlugin
 			if ($result)
 			{
 				$lines = array();
-				$do = 0;
+				$newLines = array();
 				
 				// .txt for opening in EXCEL with chance to make settings for tab separated.
 				$logFile = $this->backuppaths[$component] . '/' . $this->log_file_name . '_' . $component . '.csv.txt';
@@ -72,15 +72,14 @@ class PlgSystemBackupslogghsvs extends CMSPlugin
 
 					if (!in_array($data, $lines))
 					{
-						$lines[] = $data;
-						$do++;
+						$newLines[] = $data;
 					}
 				}
 				
-				if ($do)
+				if ($newLines)
 				{
-					file_put_contents($logFile, implode("\n", $lines), FILE_APPEND);
-					$this->app->enqueueMessage('Just info: plg_system_backupslogghsvs added ' . $do . ' backup log entries. Extension: ' . $component);
+					file_put_contents($logFile, implode("\n", $newLines), FILE_APPEND);
+					$this->app->enqueueMessage('Just info: plg_system_backupslogghsvs added ' . count($newLines) . ' backup log entries. Extension: ' . $component);
 				}
 			}
 		}
