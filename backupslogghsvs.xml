@@ -10,10 +10,10 @@
  <version>2019.06.06</version>
  <description>Joomla plugin that copies db entries of Akeeba Backup and Easy Joomla Backup into a tab separated csv file inside each backups folder</description>
 
- <updateservers><server type="extension" priority="1" name="PLG_SYSTEM_BACKUPSLOGGHSVS">https://raw.githubusercontent.com/GHSVS-de/plg_system_backupslogghsvs/master/updateserver-infos.xml</server></updateservers>
- 
- <changelogurl>https://raw.githubusercontent.com/GHSVS-de/plg_system_backupslogghsvs/master/changelog-infos.xml</changelogurl>
- 
+ <updateservers><server type="extension" priority="1" name="PLG_SYSTEM_BACKUPSLOGGHSVS">https://raw.githubusercontent.com/GHSVS-de/upadateservers/master/plg_system_backupslogghsvs.xml</server></updateservers>
+
+ <changelogurl>https://raw.githubusercontent.com/GHSVS-de/upadateservers/master/plg_system_backupslogghsvs_changelog.xml</changelogurl>
+
  <files>
 	<filename plugin="backupslogghsvs">backupslogghsvs.php</filename>
 	<filename>LICENSE.txt</filename>
