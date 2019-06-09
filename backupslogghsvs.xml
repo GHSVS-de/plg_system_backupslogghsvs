@@ -14,6 +14,8 @@
 
  <changelogurl>https://raw.githubusercontent.com/GHSVS-de/upadateservers/master/backupslogghsvs-changelog.xml</changelogurl>
 
+ <scriptfile>installerScript.php</scriptfile>
+
  <files>
 	<filename plugin="backupslogghsvs">backupslogghsvs.php</filename>
 	<filename>installerScript.php</filename>
