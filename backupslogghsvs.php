@@ -78,7 +78,7 @@ class PlgSystemBackupslogghsvs extends CMSPlugin
 				
 				if ($newLines)
 				{
-					file_put_contents($logFile, implode("\n", $newLines), FILE_APPEND);
+					file_put_contents($logFile, implode("\n", $newLines) . "\n", FILE_APPEND);
 					$this->app->enqueueMessage('Just info: plg_system_backupslogghsvs added ' . count($newLines) . ' backup log entries. Extension: ' . $component);
 				}
 			}
