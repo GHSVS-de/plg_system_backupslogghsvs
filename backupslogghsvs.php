@@ -1,8 +1,10 @@
 <?php
 defined('JPATH_BASE') or die;
 
+use Joomla\CMS\Application\ApplicationHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\CMS\Uri\Uri;
 
 class PlgSystemBackupslogghsvs extends CMSPlugin
 {
@@ -29,10 +31,21 @@ class PlgSystemBackupslogghsvs extends CMSPlugin
 		{
 			return;
 		}
-		
+
+		$root = Uri::root();
+
+		if(!empty($root))
+		{
+			$root = implode('-', array_filter(explode('/', str_replace(array('http://', 'https://'), '', $root))));
+		}
+		else
+		{
+			$root = Uri::getInstance()->getHost();
+		}
+
 		$query = $this->db->getQuery(true)
 		->select('*');
-		
+
 		foreach ($this->backuptables as $component => $table)
 		{
 			$query->clear('from')->from($table);
@@ -53,9 +66,10 @@ class PlgSystemBackupslogghsvs extends CMSPlugin
 			{
 				$lines = array();
 				$newLines = array();
-				
+
 				// .txt for opening in EXCEL with chance to make settings for tab separated.
-				$logFile = $this->backuppaths[$component] . '/' . $this->log_file_name . '_' . $component . '.csv.txt';
+				$logFile = $this->backuppaths[$component] . '/' . $this->log_file_name
+					. '_' . $root . '_' . $component . '.csv.txt';
 
 				if (is_file($logFile))
 				{
