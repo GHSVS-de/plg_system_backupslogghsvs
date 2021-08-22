@@ -14,7 +14,7 @@ class PlgSystemBackupslogghsvs extends CMSPlugin
 	protected $backuppaths = array();
 	protected $backuptables = array();
 	protected $log_file_name = 'plg_system_backupslogghsvs';
-	
+
 	public function onUserAfterLogin($options)
 	{
 		if (
@@ -26,7 +26,7 @@ class PlgSystemBackupslogghsvs extends CMSPlugin
 		}
 
 		$this->prepareExecutes();
-	
+
 		if ($this->execute !== true)
 		{
 			return;
@@ -50,7 +50,7 @@ class PlgSystemBackupslogghsvs extends CMSPlugin
 		{
 			$query->clear('from')->from($table);
 			$this->db->setQuery($query);
-		
+
 			try
 			{
 				$result = $this->db->loadAssocList();
@@ -89,7 +89,7 @@ class PlgSystemBackupslogghsvs extends CMSPlugin
 						$newLines[] = $data;
 					}
 				}
-				
+
 				if ($newLines)
 				{
 					file_put_contents($logFile, implode("\n", $newLines) . "\n", FILE_APPEND);
@@ -103,6 +103,7 @@ class PlgSystemBackupslogghsvs extends CMSPlugin
 	{
 		$this->backuppaths = array(
 			'akeeba' => JPATH_ADMINISTRATOR . '/components/com_akeeba/backup',
+			'akeebabackup' => JPATH_ADMINISTRATOR . '/components/com_akeebabackup/backup',
 			'ejb'    => JPATH_ADMINISTRATOR . '/components/com_easyjoomlabackup/backups',
 		);
 
@@ -122,6 +123,7 @@ class PlgSystemBackupslogghsvs extends CMSPlugin
 
 		$this->backuptables = array(
 			'akeeba' => 'ak_stats',
+			'akeebabackup' => 'akeebabackup_backups',
 			'ejb'    => 'easyjoomlabackup',
 		);
 
@@ -142,7 +144,7 @@ class PlgSystemBackupslogghsvs extends CMSPlugin
 		{
 			if (
 				!isset($this->backuppaths[$component])
-				|| !in_array($prefix . $table, $tables) 
+				|| !in_array($prefix . $table, $tables)
 			){
 				unset($this->backuptables[$component]);
 				continue;
