@@ -1,4 +1,9 @@
 # plg_user_backupslogs
+
+## Does not support yet
+- Akeeba Backup **9** (Joomla 4).
+
+
 Joomla plugin that copies backups informations of extensions "Akeeba Backup" and "Easy Joomla Backup" into a tab separated csv file inside each backups folder.
 
 When a user logs in into backend:
