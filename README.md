@@ -1,6 +1,6 @@
 # plg_user_backupslogs
 
-## Does not support yet
+## Versions lower then V2021.08.22 don't support
 - Akeeba Backup **9** (Joomla 4).
 
 
@@ -16,4 +16,4 @@ When a user logs in into backend:
 The plugin uses hard coded paths to the backup directories! It doesn't detect changed locations in settings of extensions!
 https://github.com/GHSVS-de/plg_system_backupslogghsvs/blob/2019.06.01/backupslogghsvs.php#L91-L94
 
-Last tests: Joomla 3.9.7-dev, PHP 7.3.3, MySql 5.7.25
+Last tests: Joomla 3.9.7-dev, Joomla 4.x, PHP 8.0, MySql 5.7
