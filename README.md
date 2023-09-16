@@ -14,6 +14,6 @@ When a user logs in into backend:
 - Nothing more.
 
 The plugin uses hard coded paths to the backup directories! It doesn't detect changed locations in settings of extensions!
-https://github.com/GHSVS-de/plg_system_backupslogghsvs/blob/2019.06.01/backupslogghsvs.php#L91-L94
+https://github.com/GHSVS-de/plg_system_backupslogghsvs/blob/2021.08.22/backupslogghsvs.php#L104-L108
 
-Last tests: Joomla 3.9.7-dev, Joomla 4.x, PHP 8.0, MySql 5.7
+Last tests: Joomla 3.9.7-dev, Joomla 4.x, PHP 8.2, MySql 5.7
