@@ -1,4 +1,4 @@
-# plg_user_backupslogs
+# plg_system_backupslogs
 
 ## Versions lower then V2021.08.22 don't support
 - Akeeba Backup **9** (Joomla 4).
