@@ -4,6 +4,7 @@
 	"filename": "backupslogghsvs",
 	"version": "2023.11.03",
 	"versionCompare": "2021.08.22",
+	"versionSub": "",
 	"update": {
 		"infourl": "https://github.com/GHSVS-de/plg_system_backupslogghsvs{{thisRelease}}",
 		"type": "plugin",
