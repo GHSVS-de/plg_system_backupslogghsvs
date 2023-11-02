@@ -1,24 +1,28 @@
 <?php
-defined('JPATH_BASE') or die;
+namespace GHSVS\Plugin\System\BackupsLogGhsvs\Extension;
+
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Application\ApplicationHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Database\DatabaseAwareTrait;
+use Exception;
 
-class PlgSystemBackupslogghsvs extends CMSPlugin
+final class BackupsLogGhsvs extends CMSPlugin
 {
-  protected $app;
-	protected $db;
+	use DatabaseAwareTrait;
+
 	private $execute = null;
-	protected $backuppaths = array();
-	protected $backuptables = array();
+	protected $backuppaths = [];
+	protected $backuptables = [];
 	protected $log_file_name = 'plg_system_backupslogghsvs';
 
 	public function onUserAfterLogin($options)
 	{
 		if (
-			!$this->app->isClient('administrator')
+			!$this->getApplication()->isClient('administrator')
 			|| Factory::getDocument()->getType() !== 'html'
 		){
 			$this->execute = false;
@@ -43,29 +47,29 @@ class PlgSystemBackupslogghsvs extends CMSPlugin
 			$root = Uri::getInstance()->getHost();
 		}
 
-		$query = $this->db->getQuery(true)
-		->select('*');
+		$db = $this->getDatabase();
+		$query = $db->getQuery(true)->select('*');
 
 		foreach ($this->backuptables as $component => $table)
 		{
 			$query->clear('from')->from($table);
-			$this->db->setQuery($query);
+			$db->setQuery($query);
 
 			try
 			{
-				$result = $this->db->loadAssocList();
+				$result = $db->loadAssocList();
 			}
 			catch (Exception $e)
 			{
-				$this->app->enqueueMessage('plg_system_backupslogghsvs could not get database table entries. Code: ' . $e->getCode() . ' Message: ' . $e->getMessage() . ' Table: ' . $e->$table());
+				$this->getApplication()->enqueueMessage('plg_system_backupslogghsvs could not get database table entries. Code: ' . $e->getCode() . ' Message: ' . $e->getMessage() . ' Table: ' . $e->$table());
 				$this->execute = false;
 				return;
 			}
 
 			if ($result)
 			{
-				$lines = array();
-				$newLines = array();
+				$lines = [];
+				$newLines = [];
 
 				// .txt for opening in EXCEL with chance to make settings for tab separated.
 				$logFile = $this->backuppaths[$component] . '/' . $this->log_file_name
@@ -74,7 +78,6 @@ class PlgSystemBackupslogghsvs extends CMSPlugin
 				if (is_file($logFile))
 				{
 					$lines = file($logFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-					// $lines = array_flip($lines);
 				}
 
 				array_unshift($result, array_keys($result[0]));
@@ -93,7 +96,7 @@ class PlgSystemBackupslogghsvs extends CMSPlugin
 				if ($newLines)
 				{
 					file_put_contents($logFile, implode("\n", $newLines) . "\n", FILE_APPEND);
-					$this->app->enqueueMessage('Just info: plg_system_backupslogghsvs added ' . count($newLines) . ' backup log entries. Extension: ' . $component);
+					$this->getApplication()->enqueueMessage('Just info: plg_system_backupslogghsvs added ' . count($newLines) . ' backup log entries. Extension: ' . $component);
 				}
 			}
 		}
@@ -101,11 +104,11 @@ class PlgSystemBackupslogghsvs extends CMSPlugin
 
 	public function prepareExecutes()
 	{
-		$this->backuppaths = array(
+		$this->backuppaths = [
 			'akeeba' => JPATH_ADMINISTRATOR . '/components/com_akeeba/backup',
 			'akeebabackup' => JPATH_ADMINISTRATOR . '/components/com_akeebabackup/backup',
 			'ejb'    => JPATH_ADMINISTRATOR . '/components/com_easyjoomlabackup/backups',
-		);
+		];
 
 		foreach ($this->backuppaths as $component => $path)
 		{
@@ -127,15 +130,17 @@ class PlgSystemBackupslogghsvs extends CMSPlugin
 			'ejb'    => 'easyjoomlabackup',
 		);
 
-		$prefix = $this->db->getPrefix();
+		$db = $this->getDatabase();
+
+		$prefix = $db->getPrefix();
 
 		try
 		{
-			$tables = $this->db->getTableList();
+			$tables = $db->getTableList();
 		}
 		catch (Exception $e)
 		{
-			$this->app->enqueueMessage('plg_system_backupslogghsvs could not get database table list. Code: ' . $e->getCode() . ' Message: ' . $e->getMessage());
+			$this->getApplication()->enqueueMessage('plg_system_backupslogghsvs could not get database table list. Code: ' . $e->getCode() . ' Message: ' . $e->getMessage());
 			$this->execute = false;
 			return;
 		}
@@ -150,7 +155,7 @@ class PlgSystemBackupslogghsvs extends CMSPlugin
 				continue;
 			}
 
-			$this->backuptables[$component] = $this->db->qn('#__' . $table);
+			$this->backuptables[$component] = $db->quoteName('#__' . $table);
 		}
 
 		if (!$this->backuptables)
@@ -162,7 +167,7 @@ class PlgSystemBackupslogghsvs extends CMSPlugin
 		$this->execute = true;
 	}
 
-	protected static function removeJPATH_SITE($str)
+	protected function removeJPATH_SITE($str)
 	{
 		return str_replace(array(JPATH_SITE, "\n"), array('', ' '), $str);
 	}
