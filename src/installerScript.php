@@ -118,7 +118,9 @@ class plgSystemBackupslogGhsvsInstallerScript extends InstallerScript
 			$query->select('update_site_id')
 				->from($db->qn('#__update_sites'))
 				->where($db->qn('location') . ' = '
-					. $db->q('https://raw.githubusercontent.com/GHSVS-de/plg_system_backupslogghsvs/master/updateserver-infos.xml'));
+				. $db->q('https://raw.githubusercontent.com/GHSVS-de/plg_system_backupslogghsvs/master/updateserver-infos.xml'), 'OR')
+				->where($db->qn('location') . ' = '
+				. $db->q('https://raw.githubusercontent.com/GHSVS-de/upadateservers/master/backupslogghsvs-update.xml'));
 
 			$ids = $db->setQuery($query)->loadAssocList('update_site_id');
 

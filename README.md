@@ -45,3 +45,7 @@ $this->backuppaths = [
 - Create new release with new tag.
   - See and copy and complete release description in `dist/release.txt`.
 - Extracts(!) of the update and changelog XML for update and changelog servers are in `./dist` as well. Copy/paste and make necessary additions.
+#### Do not forget!
+At the moment there are 2 update XML files. Adapt them both.
+- `/upadateservers/master/backupslogghsvs-update.xml` (old).
+- `/upadateservers/master/plg_system_backupslogghsvs-update.xml`
