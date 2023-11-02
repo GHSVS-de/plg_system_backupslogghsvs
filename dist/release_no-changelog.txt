@@ -1,0 +1,28 @@
+2023.11.03
+
+Joomla system plugin BackupsLogGhsvs 2023.11.03
+
+Checksum entities: `&lt;sha256&gt;5ae2b398945d4e0b44a52e11937eabdb3f925439403e1ccf857994da86d46b6e&lt;/sha256&gt;`
+
+Joomla system plugin that copies db entries of Akeeba Backup and Easy Joomla Backup into a tab separated csv file inside each backups folder. No other luxury included!
+
+### Joomla 4.3+, Joomla 5
+
+### Download
+[plg_system_backupslogghsvs-2023.11.03.zip](https://github.com/GHSVS-de/plg_system_backupslogghsvs/raw/2023.11.03/dist/plg_system_backupslogghsvs-2023.11.03.zip)
+
+### Joomla-Target-Platform(s)
+4\.(3|4|5|6|7|8|9|10|11|12|13|14|15), 5.&ast;
+
+### For the interested ones
+- New "modern" plugin structure. New build procedure.
+- [Compare releases 2021.08.22...2023.11.03](https://github.com/GHSVS-de/plg_system_backupslogghsvs/compare/2021.08.22...2023.11.03)
+- minimumJoomla: 4.3.0
+- maximumJoomla: 5.9999.9999
+- minimumPhp: 7.4.0
+- maximumPhp:
+- Checksum: `<sha256>5ae2b398945d4e0b44a52e11937eabdb3f925439403e1ccf857994da86d46b6e</sha256>`
+- Readme: https://github.com/GHSVS-de/plg_system_backupslogghsvs#readme
+- Updates XML: https://raw.githubusercontent.com/GHSVS-de/upadateservers/master/plg_system_backupslogghsvs-update.xml
+- Last tests: PHP 8.2<br>PHP 8.1<br>Joomla 4.4<br>Joomla 5.0
+- Language files: en-GB
